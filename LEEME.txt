@@ -1,0 +1,8 @@
+PORTAFOLIO ROMINA — VERSIÓN INSPIRADA EN LA EXPERIENCIA DE AN ARQUITECTOS
+
+1. Mantén juntos index.html, styles.css, script.js y la carpeta assets.
+2. Abre index.html en Chrome o Edge.
+3. Para publicar: arrastra toda la carpeta a Netlify Drop o súbela a Vercel/GitHub Pages.
+4. No abras solo index.html fuera de esta carpeta, porque las imágenes y estilos están en archivos separados.
+
+La página utiliza exclusivamente el contenido y las imágenes del portafolio de Romina.

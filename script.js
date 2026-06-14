@@ -1,191 +1,21 @@
-const galleries = {
-  serendipia: { title: 'Hotel Serendipia', pages: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14] },
-  urbano: { title: 'Diseño de vías en Surco', pages: [15, 16, 17, 18, 19, 20] },
-  chabuca: { title: 'Parque Chabuca Granda', pages: [21, 22, 23, 24, 25, 26, 27, 28, 29, 30] },
-  capilla: { title: 'Capilla San Gregorio Magno', pages: [31, 32, 33, 34, 35, 36, 37, 38, 39] },
-  industrial: { title: 'Casa estilo industrial', pages: [40, 41, 42, 43, 44] },
-  raimondi: { title: 'Parque Antonio Raimondi', pages: [47, 48, 49, 50, 51, 52, 53] },
-  all: { title: 'Portafolio completo', pages: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 47, 48, 49, 50, 51, 52, 53, 54] }
-};
-
-const imagePath = page => `assets/portfolio/${page}.webp`;
-const header = document.querySelector('.site-header');
-const progress = document.querySelector('.scroll-progress span');
-const menuButton = document.querySelector('.menu-button');
-const nav = document.querySelector('.main-nav');
-const navLinks = [...nav.querySelectorAll('a')];
-
-function updateScrollUI() {
-  const max = document.documentElement.scrollHeight - window.innerHeight;
-  progress.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
-  header.classList.toggle('scrolled', window.scrollY > 18);
-}
-window.addEventListener('scroll', updateScrollUI, { passive: true });
-updateScrollUI();
-
-menuButton.addEventListener('click', () => {
-  const open = nav.classList.toggle('open');
-  menuButton.setAttribute('aria-expanded', String(open));
-  document.body.classList.toggle('menu-open', open);
-});
-navLinks.forEach(link => link.addEventListener('click', () => {
-  nav.classList.remove('open');
-  menuButton.setAttribute('aria-expanded', 'false');
-  document.body.classList.remove('menu-open');
-}));
-
-const revealObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      revealObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.1, rootMargin: '0px 0px -5% 0px' });
-document.querySelectorAll('.reveal').forEach(element => revealObserver.observe(element));
-
-const sectionObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`));
-  });
-}, { rootMargin: '-35% 0px -55% 0px', threshold: 0 });
-document.querySelectorAll('main section[id]').forEach(section => sectionObserver.observe(section));
-
-const stageImage = document.querySelector('#work-stage-image');
-const stageNumber = document.querySelector('#work-stage-number');
-const stageTitle = document.querySelector('#work-stage-title');
-const stageDiscipline = document.querySelector('#work-stage-discipline');
-const stageButton = document.querySelector('.work-stage-button');
-const projectEntries = [...document.querySelectorAll('.work-entry')];
-let activeProject = 'serendipia';
-let stageSwapTimer;
-
-function setActiveProject(entry) {
-  const { key, image, number, title, discipline } = entry.dataset;
-  if (!key || key === activeProject) return;
-  activeProject = key;
-  projectEntries.forEach(item => item.classList.toggle('active', item === entry));
-  stageImage.classList.add('changing');
-  clearTimeout(stageSwapTimer);
-  stageSwapTimer = window.setTimeout(() => {
-    stageImage.onload = () => stageImage.classList.remove('changing');
-    stageImage.src = imagePath(image);
-    stageImage.alt = title;
-    stageNumber.textContent = number;
-    stageTitle.textContent = title;
-    stageDiscipline.textContent = discipline;
-    stageButton.dataset.openGallery = key;
-    stageButton.setAttribute('aria-label', `Abrir proyecto ${title}`);
-  }, 150);
-}
-
-const projectObserver = new IntersectionObserver(entries => {
-  const candidates = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-  if (candidates[0]) setActiveProject(candidates[0].target);
-}, { threshold: [0.18, 0.35, 0.55], rootMargin: '-18% 0px -30% 0px' });
-projectEntries.forEach(entry => projectObserver.observe(entry));
-
-const dialog = document.querySelector('.gallery-dialog');
-const galleryTitle = document.querySelector('.gallery-title');
-const galleryCounter = document.querySelector('.gallery-counter');
-const galleryImage = document.querySelector('.gallery-image');
-const galleryCanvas = document.querySelector('.gallery-canvas');
-const galleryPages = document.querySelector('.gallery-pages');
-const zoomButton = document.querySelector('[data-gallery-zoom]');
-let currentGallery = null;
-let currentIndex = 0;
-let triggerElement = null;
-let touchStartX = 0;
-
-function renderPage() {
-  if (!currentGallery) return;
-  const page = currentGallery.pages[currentIndex];
-  galleryImage.classList.add('loading');
-  galleryImage.src = imagePath(page);
-  galleryImage.alt = `${currentGallery.title}, lámina ${currentIndex + 1} de ${currentGallery.pages.length}`;
-  galleryCounter.textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(currentGallery.pages.length).padStart(2, '0')}`;
-  galleryPages.querySelectorAll('button').forEach((button, index) => {
-    button.classList.toggle('active', index === currentIndex);
-    if (index === currentIndex) button.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-  });
-  galleryCanvas.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-  const adjacent = [currentGallery.pages[currentIndex - 1], currentGallery.pages[currentIndex + 1]].filter(Boolean);
-  adjacent.forEach(number => { const preload = new Image(); preload.src = imagePath(number); });
-}
-
-galleryImage.addEventListener('load', () => galleryImage.classList.remove('loading'));
-
-function openGallery(key, trigger = null) {
-  const gallery = galleries[key];
-  if (!gallery) return;
-  currentGallery = gallery;
-  currentIndex = 0;
-  triggerElement = trigger;
-  galleryTitle.textContent = gallery.title;
-  galleryCanvas.classList.remove('zoomed');
-  zoomButton.textContent = 'Ampliar';
-  galleryPages.innerHTML = gallery.pages.map((page, index) =>
-    `<button type="button" data-gallery-page="${index}" aria-label="Ir a la lámina ${index + 1}">${String(index + 1).padStart(2, '0')}</button>`
-  ).join('');
-  renderPage();
-  dialog.showModal();
-  document.body.classList.add('dialog-open');
-}
-
-function closeGallery() {
-  dialog.close();
-}
-
-function moveGallery(direction) {
-  if (!currentGallery) return;
-  currentIndex = (currentIndex + direction + currentGallery.pages.length) % currentGallery.pages.length;
-  renderPage();
-}
-
-document.addEventListener('click', event => {
-  const trigger = event.target.closest('[data-open-gallery]');
-  if (trigger) openGallery(trigger.dataset.openGallery, trigger);
-
-  const pageButton = event.target.closest('[data-gallery-page]');
-  if (pageButton) {
-    currentIndex = Number(pageButton.dataset.galleryPage);
-    renderPage();
-  }
-});
-
-document.querySelector('[data-gallery-close]').addEventListener('click', closeGallery);
-document.querySelector('[data-gallery-prev]').addEventListener('click', () => moveGallery(-1));
-document.querySelector('[data-gallery-next]').addEventListener('click', () => moveGallery(1));
-zoomButton.addEventListener('click', () => {
-  const zoomed = galleryCanvas.classList.toggle('zoomed');
-  zoomButton.textContent = zoomed ? 'Ajustar' : 'Ampliar';
-});
-galleryImage.addEventListener('click', () => {
-  if (window.innerWidth > 560) zoomButton.click();
-});
-
-dialog.addEventListener('click', event => {
-  if (event.target === dialog) closeGallery();
-});
-dialog.addEventListener('close', () => {
-  document.body.classList.remove('dialog-open');
-  galleryImage.removeAttribute('src');
-  galleryPages.innerHTML = '';
-  currentGallery = null;
-  if (triggerElement) triggerElement.focus({ preventScroll: true });
-});
-
-document.addEventListener('keydown', event => {
-  if (!dialog.open) return;
-  if (event.key === 'ArrowLeft') moveGallery(-1);
-  if (event.key === 'ArrowRight') moveGallery(1);
-});
-
-galleryCanvas.addEventListener('pointerdown', event => { touchStartX = event.clientX; });
-galleryCanvas.addEventListener('pointerup', event => {
-  const distance = event.clientX - touchStartX;
-  if (Math.abs(distance) > 60) moveGallery(distance > 0 ? -1 : 1);
-});
-
-document.querySelector('#year').textContent = new Date().getFullYear();
+const galleries={serendipia:{number:'01',title:'Hotel Serendipia',pages:[5,6,7,8,9,10,11,12,13,14]},urbano:{number:'02',title:'Vías en Surco',pages:[15,16,17,18,19,20]},chabuca:{number:'03',title:'Parque Chabuca Granda',pages:[21,22,23,24,25,26,27,28,29,30]},capilla:{number:'04',title:'Capilla San Gregorio Magno',pages:[31,32,33,34,35,36,37,38,39]},industrial:{number:'05',title:'Casa estilo industrial',pages:[40,41,42,43,44]},raimondi:{number:'06',title:'Parque Antonio Raimondi',pages:[47,48,49,50,51,52,53]},all:{number:'00',title:'Portafolio completo',pages:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,47,48,49,50,51,52,53,54]}};
+const path=n=>`assets/portfolio/${n}.webp`;
+const coverPath=n=>`assets/covers/${n}.webp`;
+const body=document.body,menu=document.querySelector('.menu-panel'),menuBtn=document.querySelector('.menu-trigger');
+function closeMenu(){menu.classList.remove('open');body.classList.remove('menu-open');menuBtn.setAttribute('aria-expanded','false');menu.setAttribute('aria-hidden','true')}
+menuBtn.addEventListener('click',()=>{const open=!menu.classList.contains('open');menu.classList.toggle('open',open);body.classList.toggle('menu-open',open);menuBtn.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-hidden',String(!open))});
+menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+function updateClock(){document.querySelector('#clock').textContent=new Intl.DateTimeFormat('es-PE',{timeZone:'America/Lima',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date())}updateClock();setInterval(updateClock,30000);
+const progress=document.querySelector('.page-progress span');function updateProgress(){const max=document.documentElement.scrollHeight-innerHeight;progress.style.transform=`scaleX(${max>0?scrollY/max:0})`}addEventListener('scroll',updateProgress,{passive:true});updateProgress();
+const slides=[...document.querySelectorAll('.hero-slide')],slideCurrent=document.querySelector('#slideCurrent');let slide=0;setInterval(()=>{slides[slide].classList.remove('active');slide=(slide+1)%slides.length;slides[slide].classList.add('active');slideCurrent.textContent=String(slide+1).padStart(2,'0')},5200);
+const revealObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObserver.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+const preview=document.querySelector('#projectPreview'),previewNumber=document.querySelector('#previewNumber'),previewType=document.querySelector('#previewType'),rows=[...document.querySelectorAll('.project-row')];let swapTimer;
+function setProject(row){rows.forEach(r=>r.classList.toggle('active',r===row));preview.classList.add('changing');clearTimeout(swapTimer);swapTimer=setTimeout(()=>{preview.src=coverPath(row.dataset.image);preview.alt=`Vista de ${row.dataset.title}`;previewNumber.textContent=row.dataset.number;previewType.textContent=row.dataset.type;preview.onload=()=>preview.classList.remove('changing')},130)}
+rows.forEach(row=>{row.addEventListener('mouseenter',()=>setProject(row));row.addEventListener('focus',()=>setProject(row));row.addEventListener('click',()=>openGallery(row.dataset.key))});
+const dialog=document.querySelector('.gallery'),galleryTitle=document.querySelector('#galleryTitle'),galleryNumber=document.querySelector('#galleryNumber'),galleryImage=document.querySelector('#galleryImage'),galleryCounter=document.querySelector('#galleryCounter'),dots=document.querySelector('#galleryDots');let current=null,index=0,touchX=0;
+function renderGallery(){const page=current.pages[index];galleryImage.src=path(page);galleryImage.alt=`${current.title}, lámina ${index+1}`;galleryCounter.textContent=`${String(index+1).padStart(2,'0')} / ${String(current.pages.length).padStart(2,'0')}`;dots.querySelectorAll('button').forEach((d,i)=>d.classList.toggle('active',i===index));[current.pages[index-1],current.pages[index+1]].filter(Boolean).forEach(n=>{const im=new Image;im.src=path(n)})}
+function openGallery(key){current=galleries[key];if(!current)return;index=0;galleryTitle.textContent=current.title;galleryNumber.textContent=current.number;dots.innerHTML=current.pages.map((_,i)=>`<button type="button" data-dot="${i}" aria-label="Lámina ${i+1}"></button>`).join('');renderGallery();dialog.showModal();body.classList.add('gallery-open')}
+function move(n){index=(index+n+current.pages.length)%current.pages.length;renderGallery()}
+document.querySelectorAll('[data-open-gallery]').forEach(b=>b.addEventListener('click',()=>openGallery(b.dataset.openGallery)));document.querySelector('[data-close-gallery]').addEventListener('click',()=>dialog.close());document.querySelector('[data-prev]').addEventListener('click',()=>move(-1));document.querySelector('[data-next]').addEventListener('click',()=>move(1));dots.addEventListener('click',e=>{const b=e.target.closest('[data-dot]');if(b){index=+b.dataset.dot;renderGallery()}});dialog.addEventListener('close',()=>{body.classList.remove('gallery-open');galleryImage.removeAttribute('src')});document.addEventListener('keydown',e=>{if(!dialog.open)return;if(e.key==='ArrowLeft')move(-1);if(e.key==='ArrowRight')move(1)});galleryImage.addEventListener('pointerdown',e=>touchX=e.clientX);galleryImage.addEventListener('pointerup',e=>{if(Math.abs(e.clientX-touchX)>55)move(e.clientX>touchX?-1:1)});
+const dot=document.querySelector('.cursor-dot'),ring=document.querySelector('.cursor-ring');if(matchMedia('(pointer:fine)').matches){addEventListener('mousemove',e=>{dot.style.transform=`translate(${e.clientX-2.5}px,${e.clientY-2.5}px)`;ring.animate({transform:`translate(${e.clientX-17}px,${e.clientY-17}px)`},{duration:380,fill:'forwards'})});document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{ring.style.width='52px';ring.style.height='52px'});el.addEventListener('mouseleave',()=>{ring.style.width='34px';ring.style.height='34px'})})}
+document.querySelector('#year').textContent=new Date().getFullYear();
