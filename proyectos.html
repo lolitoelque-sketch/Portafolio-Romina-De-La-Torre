@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Proyectos de arquitectura, urbanismo, paisaje e interiorismo de Romina de la Torre.">
+  <title>Proyectos — Romina de la Torre</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="projects-page">
+  <header class="light-header">
+    <a href="index.html">ROMINA DE LA TORRE</a>
+    <nav><a href="index.html">INICIO</a><a href="perfil.html">PERFIL</a><button class="menu-button light-menu" type="button" aria-controls="menu" aria-expanded="false">MENÚ <span>+</span></button></nav>
+  </header>
+  <aside class="site-menu" id="menu" aria-hidden="true">
+    <button class="menu-close" type="button" aria-label="Cerrar menú">Cerrar ×</button>
+    <nav><a href="index.html"><span>01</span>Inicio</a><a href="proyectos.html"><span>02</span>Proyectos</a><a href="perfil.html"><span>03</span>Perfil</a><a href="index.html#contacto"><span>04</span>Contacto</a></nav>
+    <div class="menu-meta"><p>Romina de la Torre</p><a href="mailto:rominexx.mayo2002@gmail.com">rominexx.mayo2002@gmail.com</a></div>
+  </aside>
+  <main class="projects-main">
+    <section class="projects-intro">
+      <p class="section-label">PORTAFOLIO / 2026</p>
+      <div><h1>Proyectos</h1><p>Arquitectura, paisaje, urbanismo e interiorismo reunidos en una navegación visual clara y editorial.</p></div>
+      <div class="filter-bar" role="group" aria-label="Filtrar proyectos">
+        <button class="active" type="button" data-filter="all">TODOS</button>
+        <button type="button" data-filter="arquitectura">ARQUITECTURA</button>
+        <button type="button" data-filter="interiorismo">INTERIORISMO</button>
+        <button type="button" data-filter="paisaje">PAISAJE</button>
+        <button type="button" data-filter="urbanismo">URBANISMO</button>
+      </div>
+    </section>
+    <section class="editorial-grid" aria-live="polite">
+      <article class="project-card card-serendipia" data-category="arquitectura"><button class="card-media" type="button" data-project="serendipia"><img src="assets/covers/serendipia.webp" alt="Hotel Serendipia"></button><div class="card-caption"><span>01</span><h2>HOTEL SERENDIPIA</h2><button type="button" data-project="serendipia">↗</button></div></article>
+      <article class="project-card card-urbano framed" data-category="urbanismo"><button class="card-media" type="button" data-project="urbano"><img src="assets/covers/urbano.webp" alt="Vías en Surco"></button><div class="card-caption"><span>02</span><h2>VÍAS EN SURCO</h2><button type="button" data-project="urbano">↗</button></div><p>Urbanismo / Movilidad</p></article>
+      <article class="project-card card-chabuca" data-category="paisaje"><button class="card-media" type="button" data-project="chabuca"><img src="assets/covers/chabuca.webp" alt="Parque Chabuca Granda"></button><div class="card-caption"><span>03</span><h2>PARQUE CHABUCA GRANDA</h2><button type="button" data-project="chabuca">↗</button></div></article>
+      <article class="project-card card-capilla" data-category="interiorismo"><button class="card-media" type="button" data-project="capilla"><img src="assets/covers/capilla.webp" alt="Capilla San Gregorio Magno"></button><div class="card-caption"><span>04</span><h2>CAPILLA SAN GREGORIO</h2><button type="button" data-project="capilla">↗</button></div></article>
+      <article class="project-card card-raimondi" data-category="paisaje urbanismo"><button class="card-media" type="button" data-project="raimondi"><img src="assets/covers/raimondi.webp" alt="Parque Antonio Raimondi"></button><div class="card-caption"><span>06</span><h2>PARQUE ANTONIO RAIMONDI</h2><button type="button" data-project="raimondi">↗</button></div><p>Espacio público</p></article>
+      <article class="project-card card-industrial framed" data-category="interiorismo arquitectura"><button class="card-media" type="button" data-project="industrial"><img src="assets/covers/industrial.webp" alt="Casa de estilo industrial"></button><div class="card-caption"><span>05</span><h2>CASA INDUSTRIAL</h2><button type="button" data-project="industrial">↗</button></div><p>Interiorismo</p></article>
+    </section>
+    <section class="projects-cta"><p class="section-label section-label-light">SIGUIENTE PASO</p><div><h2>Conozcamos la historia<br>detrás de cada espacio.</h2><a class="text-link text-link-light" href="perfil.html">VER PERFIL <span>↗</span></a></div></section>
+  </main>
+  <dialog class="gallery-dialog" aria-label="Galería de proyecto"><header><div><span id="galleryNumber">01</span><h2 id="galleryTitle">Proyecto</h2></div><button type="button" data-gallery-close>CERRAR ×</button></header><div class="gallery-stage"><button type="button" data-gallery-prev aria-label="Imagen anterior">←</button><img id="galleryImage" alt=""><button type="button" data-gallery-next aria-label="Imagen siguiente">→</button></div><footer><span id="galleryCounter">01 / 10</span><div id="galleryDots"></div></footer></dialog>
+  <script src="script.js"></script>
+</body>
+</html>
