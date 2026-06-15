@@ -2,163 +2,155 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#151515">
-  <meta name="description" content="Portafolio de arquitectura, urbanismo, paisaje e interiorismo de Romina de la Torre.">
-  <title>Romina de la Torre — Arquitectura</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101010">
+  <meta name="description" content="Portafolio de arquitectura, paisaje, urbanismo e interiorismo de Romina de la Torre.">
+  <title>Romina de la Torre — Portafolio 2026</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <div class="cursor-dot" aria-hidden="true"></div>
-  <div class="cursor-ring" aria-hidden="true"></div>
-  <div class="page-progress" aria-hidden="true"><span></span></div>
-
-  <header class="topbar">
-    <div class="clock" aria-label="Hora local en Lima"><span id="clock">00:00</span></div>
-    <div class="asterisks" aria-hidden="true">✦ · ✦ · ✦ · ✦ · ✦ · ✦ · ✦ · ✦ · ✦ · ✦</div>
-    <a class="monogram" href="#inicio" aria-label="Inicio">RDLT</a>
-    <button class="menu-trigger" type="button" aria-controls="menuPanel" aria-expanded="false">
-      <span>MENÚ</span><b>+</b>
-    </button>
+<body class="home-page">
+  <header class="hero-header" id="top">
+    <a class="hero-city" href="#top" aria-label="Volver al inicio">LIMA&nbsp;&nbsp;/&nbsp;&nbsp;<span id="clock">18:28</span></a>
+    <a class="hero-mark" href="index.html" aria-label="Romina de la Torre">R&nbsp;&nbsp;D&nbsp;&nbsp;L&nbsp;&nbsp;T</a>
+    <button class="menu-button" type="button" aria-controls="menu" aria-expanded="false">MENÚ <span>+</span></button>
   </header>
 
-  <aside class="menu-panel" id="menuPanel" aria-hidden="true">
-    <div class="menu-grid">
-      <div class="menu-brand">
-        <span>RDLT</span>
-        <p>Romina de la Torre<br>Arquitectura & diseño</p>
-      </div>
-      <nav aria-label="Menú principal">
-        <a href="#inicio"><span>01</span>Inicio</a>
-        <a href="#proyectos"><span>02</span>Proyectos</a>
-        <a href="#nosotros"><span>03</span>Perfil</a>
-        <a href="#contacto"><span>04</span>Contacto</a>
-      </nav>
-      <div class="menu-contact">
-        <p>Lima, Perú</p>
-        <a href="mailto:rominexx.mayo2002@gmail.com">rominexx.mayo2002@gmail.com</a>
-        <a href="tel:+51902083083">+51 902 083 083</a>
-      </div>
+  <aside class="site-menu" id="menu" aria-hidden="true">
+    <button class="menu-close" type="button" aria-label="Cerrar menú">Cerrar ×</button>
+    <nav>
+      <a href="index.html"><span>01</span>Inicio</a>
+      <a href="proyectos.html"><span>02</span>Proyectos</a>
+      <a href="perfil.html"><span>03</span>Perfil</a>
+      <a href="#contacto"><span>04</span>Contacto</a>
+    </nav>
+    <div class="menu-meta">
+      <p>Romina de la Torre</p>
+      <a href="mailto:rominexx.mayo2002@gmail.com">rominexx.mayo2002@gmail.com</a>
+      <a href="tel:+51902083083">+51 902 083 083</a>
     </div>
   </aside>
 
   <main>
-    <section class="hero" id="inicio" aria-label="Portada">
-      <div class="hero-slides" aria-hidden="true">
-        <figure class="hero-slide active"><img src="assets/covers/serendipia.webp" alt=""><span></span></figure>
-        <figure class="hero-slide"><img src="assets/covers/chabuca.webp" alt=""><span></span></figure>
-        <figure class="hero-slide"><img src="assets/covers/capilla.webp" alt=""><span></span></figure>
+    <section class="hero-mockup" aria-label="Portada del portafolio">
+      <img class="hero-bg" src="assets/covers/serendipia.webp" alt="Hotel Serendipia, propuesta arquitectónica para clima frío y cálido">
+      <div class="hero-overlay"></div>
+      <div class="hero-axis" aria-hidden="true"></div>
+      <div class="hero-season hero-season-left" aria-hidden="true">CLIMA FRÍO<small>(TEMPORADA DE INVIERNO)</small></div>
+      <div class="hero-season hero-season-right" aria-hidden="true">CLIMA CÁLIDO<small>(VERANO - PRIMAVERA)</small></div>
+      <div class="hero-number" aria-hidden="true">01</div>
+
+      <div class="hero-copy">
+        <p class="hero-folio">PORTAFOLIO 2026</p>
+        <h1>ROMINA<br><em>DE LA TORRE</em></h1>
+        <p class="hero-disciplines">ARQUITECTURA · INTERIORISMO · PAISAJE</p>
+        <p class="hero-intro">Una selección de proyectos que exploran el contexto, la materialidad y la experiencia humana.</p>
       </div>
-      <div class="hero-shade"></div>
-      <div class="hero-logo" aria-label="Romina de la Torre">
-        <span>R</span><i></i><span>D</span><i></i><span>L</span><i></i><span>T</span>
+
+      <button class="featured-card" type="button" data-project="serendipia" aria-label="Abrir Hotel Serendipia">
+        <span>PROYECTO DESTACADO</span>
+        <strong>Hotel<br>Serendipia</strong>
+        <i></i>
+        <small>Arquitectura / Hospitalidad</small>
+        <b>↗</b>
+      </button>
+
+      <div class="hero-notes hero-notes-left" aria-hidden="true">
+        <p>Piedra volcánica. Material local, duradera y resistente al clima de Malargüe.</p>
+        <p>Uso de vegetación como barrera que filtre las brisas en su dirección en invierno.</p>
       </div>
-      <div class="hero-meta">
-        <p>ARQUITECTURA · INTERIORISMO · PAISAJE</p>
-        <p>LIMA, PERÚ — 2025</p>
+      <div class="hero-notes hero-notes-right" aria-hidden="true">
+        <p>Uso de piedra en los muros por su inercia térmica y tratamiento interior para mantener el calor en invierno.</p>
       </div>
-      <div class="hero-counter"><span id="slideCurrent">01</span><i></i><span>03</span></div>
-      <a class="scroll-cue" href="#manifesto"><span>SCROLL</span><b>↓</b></a>
+      <a class="hero-scroll" href="#enfoque">SCROLL ↓</a>
     </section>
 
-    <section class="manifesto section-white" id="manifesto">
-      <div class="corner-detail" aria-hidden="true">+</div>
-      <p class="kicker reveal">ARQUITECTURA QUE CONECTA CONTEXTO Y EXPERIENCIA</p>
-      <div class="manifesto-grid">
-        <h1 class="reveal">El arte de crear<br><em>lugares memorables.</em></h1>
-        <div class="manifesto-copy reveal">
+    <section class="focus-section" id="enfoque">
+      <div class="section-label">01 / ENFOQUE</div>
+      <div class="focus-grid">
+        <h2>El arte de crear<br><em>lugares memorables.</em></h2>
+        <div class="focus-copy">
           <p>Diseño arquitectónico, urbanismo, paisaje e interiorismo desde una mirada sensible, funcional y atenta al detalle.</p>
-          <a class="underlink" href="#nosotros">CONÓCEME <span>↘</span></a>
+          <a class="text-link" href="perfil.html">CONOCER A ROMINA <span>↘</span></a>
         </div>
       </div>
-      <div class="triptych reveal">
-        <figure class="tall"><img src="assets/covers/detail_hotel.webp" alt="Interior del Hotel Serendipia" loading="lazy"></figure>
-        <figure><img src="assets/covers/detail_park.webp" alt="Anfiteatro paisajístico" loading="lazy"></figure>
-        <figure class="tall"><img src="assets/covers/industrial.webp" alt="Interior residencial industrial" loading="lazy"></figure>
+      <div class="focus-collage" aria-label="Selección visual de proyectos">
+        <figure class="collage-left"><img src="assets/covers/detail_hotel.webp" alt="Interiores del Hotel Serendipia"></figure>
+        <figure class="collage-center"><img src="assets/covers/detail_park.webp" alt="Anfiteatro y paisaje urbano"></figure>
+        <figure class="collage-right"><img src="assets/covers/industrial.webp" alt="Casa de estilo industrial"></figure>
       </div>
     </section>
 
-    <section class="projects" id="proyectos">
-      <header class="projects-head reveal">
-        <p class="kicker">PORTAFOLIO 2025</p>
-        <h2>PROYECTOS<br>SELECCIONADOS</h2>
-        <p>Seis investigaciones espaciales entre arquitectura, ciudad, paisaje e interiorismo.</p>
-      </header>
-
-      <div class="project-browser">
-        <div class="project-preview" aria-live="polite">
-          <img id="projectPreview" src="assets/covers/serendipia.webp" alt="Vista de Hotel Serendipia">
-          <div class="preview-tag"><span id="previewNumber">01</span><span id="previewType">ARQUITECTURA</span></div>
+    <section class="selected-section" id="proyectos">
+      <div class="selected-head">
+        <div>
+          <p class="section-label section-label-light">02 / PROYECTOS RECIENTES</p>
+          <h2>Obras seleccionadas</h2>
         </div>
-        <div class="project-list">
-          <button class="project-row active" data-key="serendipia" data-image="serendipia" data-number="01" data-type="ARQUITECTURA" data-title="HOTEL SERENDIPIA">
-            <span>01</span><strong>HOTEL SERENDIPIA</strong><small>Arquitectura / Hospitalidad</small><b>↗</b>
-          </button>
-          <button class="project-row" data-key="urbano" data-image="urbano" data-number="02" data-type="URBANISMO" data-title="VÍAS EN SURCO">
-            <span>02</span><strong>VÍAS EN SURCO</strong><small>Urbanismo / Movilidad</small><b>↗</b>
-          </button>
-          <button class="project-row" data-key="chabuca" data-image="chabuca" data-number="03" data-type="PAISAJE" data-title="PARQUE CHABUCA GRANDA">
-            <span>03</span><strong>PARQUE CHABUCA GRANDA</strong><small>Paisaje / Espacio público</small><b>↗</b>
-          </button>
-          <button class="project-row" data-key="capilla" data-image="capilla" data-number="04" data-type="INTERIORISMO" data-title="CAPILLA SAN GREGORIO">
-            <span>04</span><strong>CAPILLA SAN GREGORIO</strong><small>Interiorismo / Espiritualidad</small><b>↗</b>
-          </button>
-          <button class="project-row" data-key="industrial" data-image="industrial" data-number="05" data-type="INTERIORISMO" data-title="CASA INDUSTRIAL">
-            <span>05</span><strong>CASA INDUSTRIAL</strong><small>Interiorismo / Residencial</small><b>↗</b>
-          </button>
-          <button class="project-row" data-key="raimondi" data-image="raimondi" data-number="06" data-type="ESPACIO PÚBLICO" data-title="PARQUE ANTONIO RAIMONDI">
-            <span>06</span><strong>PARQUE ANTONIO RAIMONDI</strong><small>Paisaje / Recreación</small><b>↗</b>
-          </button>
-        </div>
+        <span>2022—2026</span>
+      </div>
+
+      <div class="selected-list">
+        <article class="selected-item">
+          <button class="selected-image" type="button" data-project="serendipia"><img src="assets/covers/serendipia.webp" alt="Hotel Serendipia"></button>
+          <span class="selected-number">01</span>
+          <div class="selected-info">
+            <h3>HOTEL SERENDIPIA</h3>
+            <p>Arquitectura / Hospitalidad</p>
+            <button class="project-link" type="button" data-project="serendipia">VER PROYECTO</button>
+          </div>
+          <button class="selected-arrow" type="button" data-project="serendipia" aria-label="Abrir Hotel Serendipia">↗</button>
+        </article>
+
+        <article class="selected-item">
+          <button class="selected-image" type="button" data-project="chabuca"><img src="assets/covers/chabuca.webp" alt="Parque Chabuca Granda"></button>
+          <span class="selected-number">02</span>
+          <div class="selected-info">
+            <h3>PARQUE CHABUCA GRANDA</h3>
+            <p>Paisaje / Espacio público</p>
+            <button class="project-link" type="button" data-project="chabuca">VER PROYECTO</button>
+          </div>
+          <button class="selected-arrow" type="button" data-project="chabuca" aria-label="Abrir Parque Chabuca Granda">↗</button>
+        </article>
+
+        <article class="selected-item selected-last">
+          <button class="selected-image" type="button" data-project="capilla"><img src="assets/covers/capilla.webp" alt="Capilla San Gregorio Magno"></button>
+          <span class="selected-number">03</span>
+          <div class="selected-info">
+            <h3>CAPILLA SAN GREGORIO</h3>
+            <p>Interiorismo / Espiritualidad</p>
+            <button class="project-link" type="button" data-project="capilla">VER PROYECTO</button>
+          </div>
+          <button class="selected-arrow" type="button" data-project="capilla" aria-label="Abrir Capilla San Gregorio">↗</button>
+        </article>
+      </div>
+
+      <div class="selected-bottom">
+        <p>¿Hablamos de tu proyecto?</p>
+        <a href="#contacto">CONTACTAR ↗</a>
       </div>
     </section>
 
-    <div class="marquee" aria-hidden="true">
-      <div>+ ARQUITECTURA + INTERIORISMO + PAISAJE + URBANISMO + ARQUITECTURA + INTERIORISMO + PAISAJE + URBANISMO</div>
-      <div>+ ARQUITECTURA + INTERIORISMO + PAISAJE + URBANISMO + ARQUITECTURA + INTERIORISMO + PAISAJE + URBANISMO</div>
-    </div>
-
-    <section class="profile" id="nosotros">
-      <div class="profile-media reveal"><img src="assets/profile.webp" alt="Retrato de Romina de la Torre" loading="lazy"></div>
-      <div class="profile-copy reveal">
-        <p class="kicker">ROMINA DE LA TORRE</p>
-        <h2>Diseñar es traducir necesidades en espacios que se sienten propios.</h2>
-        <p>Arquitecta formada en la Universidad Ricardo Palma. Su trabajo explora la relación entre materialidad, recorrido, paisaje y experiencia humana, con especial interés en la escala interior y residencial.</p>
-        <dl>
-          <div><dt>BASE</dt><dd>Lima, Perú</dd></div>
-          <div><dt>DISCIPLINAS</dt><dd>Arquitectura, paisaje, urbanismo e interiorismo</dd></div>
-          <div><dt>HERRAMIENTAS</dt><dd>AutoCAD, Revit, SketchUp, Enscape, Photoshop y Lumion</dd></div>
-        </dl>
-        <button class="underlink dark-link" type="button" data-open-gallery="all">VER PORTAFOLIO COMPLETO <span>↗</span></button>
+    <section class="contact-section" id="contacto">
+      <div class="section-label">CONTACTO</div>
+      <h2>Transformemos una idea<br>en un espacio con identidad.</h2>
+      <div class="contact-row">
+        <a class="text-link" href="mailto:rominexx.mayo2002@gmail.com">HÁBLAME DE TU PROYECTO <span>↗</span></a>
+        <strong>RDLT</strong>
       </div>
-    </section>
-
-    <section class="visual-break" aria-label="Detalle de proyecto">
-      <figure><img src="assets/covers/night_park.webp" alt="Iluminación nocturna del Parque Chabuca Granda" loading="lazy"></figure>
-      <figure><img src="assets/covers/chapel.webp" alt="Interior de la Capilla San Gregorio" loading="lazy"></figure>
-      <div class="visual-caption"><span>DETALLE / MATERIALIDAD / LUZ</span><span>RDLT — 2025</span></div>
-    </section>
-
-    <section class="contact" id="contacto">
-      <div class="contact-image"><img src="assets/covers/contact.webp" alt="Hotel Serendipia en paisaje nevado" loading="lazy"></div>
-      <div class="contact-copy reveal">
-        <p class="kicker">CONTACTO</p>
-        <h2>Transformemos una idea en un espacio con identidad.</h2>
-        <a class="contact-cta" href="mailto:rominexx.mayo2002@gmail.com">HÁBLAME DE TU PROYECTO <span>↗</span></a>
-      </div>
+      <div class="contact-meta"><span>LIMA, PERÚ · 2026</span><span>ARQUITECTURA & DISEÑO</span></div>
     </section>
   </main>
 
-  <footer>
-    <div class="footer-logo">RDLT</div>
-    <div><p>Lima, Perú</p><a href="mailto:rominexx.mayo2002@gmail.com">rominexx.mayo2002@gmail.com</a><a href="tel:+51902083083">+51 902 083 083</a></div>
-    <div><p>Arquitectura & diseño</p><p>Portafolio <span id="year">2025</span></p></div>
-    <a href="#inicio">VOLVER ARRIBA ↑</a>
-  </footer>
-
-  <dialog class="gallery" aria-label="Galería de proyectos">
-    <header><div><span id="galleryNumber">01</span><h3 id="galleryTitle">Proyecto</h3></div><button type="button" data-close-gallery>CERRAR ×</button></header>
-    <div class="gallery-stage"><button type="button" data-prev aria-label="Anterior">←</button><img id="galleryImage" alt=""><button type="button" data-next aria-label="Siguiente">→</button></div>
+  <dialog class="gallery-dialog" aria-label="Galería de proyecto">
+    <header>
+      <div><span id="galleryNumber">01</span><h2 id="galleryTitle">Proyecto</h2></div>
+      <button type="button" data-gallery-close>CERRAR ×</button>
+    </header>
+    <div class="gallery-stage">
+      <button type="button" data-gallery-prev aria-label="Imagen anterior">←</button>
+      <img id="galleryImage" alt="">
+      <button type="button" data-gallery-next aria-label="Imagen siguiente">→</button>
+    </div>
     <footer><span id="galleryCounter">01 / 10</span><div id="galleryDots"></div></footer>
   </dialog>
 
