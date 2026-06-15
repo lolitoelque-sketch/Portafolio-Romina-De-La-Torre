@@ -1,21 +1,115 @@
-const galleries={serendipia:{number:'01',title:'Hotel Serendipia',pages:[5,6,7,8,9,10,11,12,13,14]},urbano:{number:'02',title:'Vías en Surco',pages:[15,16,17,18,19,20]},chabuca:{number:'03',title:'Parque Chabuca Granda',pages:[21,22,23,24,25,26,27,28,29,30]},capilla:{number:'04',title:'Capilla San Gregorio Magno',pages:[31,32,33,34,35,36,37,38,39]},industrial:{number:'05',title:'Casa estilo industrial',pages:[40,41,42,43,44]},raimondi:{number:'06',title:'Parque Antonio Raimondi',pages:[47,48,49,50,51,52,53]},all:{number:'00',title:'Portafolio completo',pages:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,47,48,49,50,51,52,53,54]}};
-const path=n=>`assets/portfolio/${n}.webp`;
-const coverPath=n=>`assets/covers/${n}.webp`;
-const body=document.body,menu=document.querySelector('.menu-panel'),menuBtn=document.querySelector('.menu-trigger');
-function closeMenu(){menu.classList.remove('open');body.classList.remove('menu-open');menuBtn.setAttribute('aria-expanded','false');menu.setAttribute('aria-hidden','true')}
-menuBtn.addEventListener('click',()=>{const open=!menu.classList.contains('open');menu.classList.toggle('open',open);body.classList.toggle('menu-open',open);menuBtn.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-hidden',String(!open))});
-menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
-function updateClock(){document.querySelector('#clock').textContent=new Intl.DateTimeFormat('es-PE',{timeZone:'America/Lima',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date())}updateClock();setInterval(updateClock,30000);
-const progress=document.querySelector('.page-progress span');function updateProgress(){const max=document.documentElement.scrollHeight-innerHeight;progress.style.transform=`scaleX(${max>0?scrollY/max:0})`}addEventListener('scroll',updateProgress,{passive:true});updateProgress();
-const slides=[...document.querySelectorAll('.hero-slide')],slideCurrent=document.querySelector('#slideCurrent');let slide=0;setInterval(()=>{slides[slide].classList.remove('active');slide=(slide+1)%slides.length;slides[slide].classList.add('active');slideCurrent.textContent=String(slide+1).padStart(2,'0')},5200);
-const revealObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObserver.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
-const preview=document.querySelector('#projectPreview'),previewNumber=document.querySelector('#previewNumber'),previewType=document.querySelector('#previewType'),rows=[...document.querySelectorAll('.project-row')];let swapTimer;
-function setProject(row){rows.forEach(r=>r.classList.toggle('active',r===row));preview.classList.add('changing');clearTimeout(swapTimer);swapTimer=setTimeout(()=>{preview.src=coverPath(row.dataset.image);preview.alt=`Vista de ${row.dataset.title}`;previewNumber.textContent=row.dataset.number;previewType.textContent=row.dataset.type;preview.onload=()=>preview.classList.remove('changing')},130)}
-rows.forEach(row=>{row.addEventListener('mouseenter',()=>setProject(row));row.addEventListener('focus',()=>setProject(row));row.addEventListener('click',()=>openGallery(row.dataset.key))});
-const dialog=document.querySelector('.gallery'),galleryTitle=document.querySelector('#galleryTitle'),galleryNumber=document.querySelector('#galleryNumber'),galleryImage=document.querySelector('#galleryImage'),galleryCounter=document.querySelector('#galleryCounter'),dots=document.querySelector('#galleryDots');let current=null,index=0,touchX=0;
-function renderGallery(){const page=current.pages[index];galleryImage.src=path(page);galleryImage.alt=`${current.title}, lámina ${index+1}`;galleryCounter.textContent=`${String(index+1).padStart(2,'0')} / ${String(current.pages.length).padStart(2,'0')}`;dots.querySelectorAll('button').forEach((d,i)=>d.classList.toggle('active',i===index));[current.pages[index-1],current.pages[index+1]].filter(Boolean).forEach(n=>{const im=new Image;im.src=path(n)})}
-function openGallery(key){current=galleries[key];if(!current)return;index=0;galleryTitle.textContent=current.title;galleryNumber.textContent=current.number;dots.innerHTML=current.pages.map((_,i)=>`<button type="button" data-dot="${i}" aria-label="Lámina ${i+1}"></button>`).join('');renderGallery();dialog.showModal();body.classList.add('gallery-open')}
-function move(n){index=(index+n+current.pages.length)%current.pages.length;renderGallery()}
-document.querySelectorAll('[data-open-gallery]').forEach(b=>b.addEventListener('click',()=>openGallery(b.dataset.openGallery)));document.querySelector('[data-close-gallery]').addEventListener('click',()=>dialog.close());document.querySelector('[data-prev]').addEventListener('click',()=>move(-1));document.querySelector('[data-next]').addEventListener('click',()=>move(1));dots.addEventListener('click',e=>{const b=e.target.closest('[data-dot]');if(b){index=+b.dataset.dot;renderGallery()}});dialog.addEventListener('close',()=>{body.classList.remove('gallery-open');galleryImage.removeAttribute('src')});document.addEventListener('keydown',e=>{if(!dialog.open)return;if(e.key==='ArrowLeft')move(-1);if(e.key==='ArrowRight')move(1)});galleryImage.addEventListener('pointerdown',e=>touchX=e.clientX);galleryImage.addEventListener('pointerup',e=>{if(Math.abs(e.clientX-touchX)>55)move(e.clientX>touchX?-1:1)});
-const dot=document.querySelector('.cursor-dot'),ring=document.querySelector('.cursor-ring');if(matchMedia('(pointer:fine)').matches){addEventListener('mousemove',e=>{dot.style.transform=`translate(${e.clientX-2.5}px,${e.clientY-2.5}px)`;ring.animate({transform:`translate(${e.clientX-17}px,${e.clientY-17}px)`},{duration:380,fill:'forwards'})});document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{ring.style.width='52px';ring.style.height='52px'});el.addEventListener('mouseleave',()=>{ring.style.width='34px';ring.style.height='34px'})})}
-document.querySelector('#year').textContent=new Date().getFullYear();
+const projects = {
+  serendipia: { number: '01', title: 'Hotel Serendipia', pages: [5,6,7,8,9,10,11,12,13,14] },
+  urbano: { number: '02', title: 'Vías en Surco', pages: [15,16,17,18,19,20] },
+  chabuca: { number: '03', title: 'Parque Chabuca Granda', pages: [21,22,23,24,25,26,27,28,29,30] },
+  capilla: { number: '04', title: 'Capilla San Gregorio Magno', pages: [31,32,33,34,35,36,37,38,39] },
+  industrial: { number: '05', title: 'Casa estilo industrial', pages: [40,41,42,43,44] },
+  raimondi: { number: '06', title: 'Parque Antonio Raimondi', pages: [47,48,49,50,51,52,53] }
+};
+
+const body = document.body;
+const menu = document.querySelector('.site-menu');
+const menuButtons = document.querySelectorAll('.menu-button');
+const menuClose = document.querySelector('.menu-close');
+
+function setMenu(open) {
+  if (!menu) return;
+  menu.classList.toggle('open', open);
+  body.classList.toggle('menu-open', open);
+  menu.setAttribute('aria-hidden', String(!open));
+  menuButtons.forEach(button => button.setAttribute('aria-expanded', String(open)));
+}
+menuButtons.forEach(button => button.addEventListener('click', () => setMenu(true)));
+menuClose?.addEventListener('click', () => setMenu(false));
+menu?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenu(false)));
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && menu?.classList.contains('open')) setMenu(false);
+});
+
+const clock = document.querySelector('#clock');
+function updateClock() {
+  if (!clock) return;
+  clock.textContent = new Intl.DateTimeFormat('es-PE', {
+    timeZone: 'America/Lima', hour: '2-digit', minute: '2-digit', hour12: false
+  }).format(new Date());
+}
+updateClock();
+setInterval(updateClock, 30000);
+
+const filterButtons = document.querySelectorAll('[data-filter]');
+const projectCards = document.querySelectorAll('.project-card');
+filterButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    filterButtons.forEach(item => item.classList.remove('active'));
+    button.classList.add('active');
+    const filter = button.dataset.filter;
+    projectCards.forEach(card => {
+      const categories = card.dataset.category.split(' ');
+      card.classList.toggle('hidden', filter !== 'all' && !categories.includes(filter));
+    });
+  });
+});
+
+const dialog = document.querySelector('.gallery-dialog');
+const galleryImage = document.querySelector('#galleryImage');
+const galleryTitle = document.querySelector('#galleryTitle');
+const galleryNumber = document.querySelector('#galleryNumber');
+const galleryCounter = document.querySelector('#galleryCounter');
+const galleryDots = document.querySelector('#galleryDots');
+let activeProject = null;
+let galleryIndex = 0;
+let pointerStart = 0;
+
+function imagePath(page) { return `assets/portfolio/${page}.webp`; }
+function renderGallery() {
+  if (!activeProject || !galleryImage) return;
+  const page = activeProject.pages[galleryIndex];
+  galleryImage.src = imagePath(page);
+  galleryImage.alt = `${activeProject.title}, lámina ${galleryIndex + 1}`;
+  galleryCounter.textContent = `${String(galleryIndex + 1).padStart(2,'0')} / ${String(activeProject.pages.length).padStart(2,'0')}`;
+  galleryDots?.querySelectorAll('button').forEach((dot, index) => dot.classList.toggle('active', index === galleryIndex));
+}
+function openGallery(key) {
+  if (!dialog || !projects[key]) return;
+  activeProject = projects[key];
+  galleryIndex = 0;
+  galleryTitle.textContent = activeProject.title;
+  galleryNumber.textContent = activeProject.number;
+  galleryDots.innerHTML = activeProject.pages.map((_, index) => `<button type="button" data-gallery-dot="${index}" aria-label="Ir a imagen ${index + 1}"></button>`).join('');
+  renderGallery();
+  dialog.showModal();
+  body.classList.add('gallery-open');
+}
+function moveGallery(direction) {
+  if (!activeProject) return;
+  galleryIndex = (galleryIndex + direction + activeProject.pages.length) % activeProject.pages.length;
+  renderGallery();
+}
+
+document.querySelectorAll('[data-project]').forEach(button => button.addEventListener('click', () => openGallery(button.dataset.project)));
+document.querySelector('[data-gallery-close]')?.addEventListener('click', () => dialog.close());
+document.querySelector('[data-gallery-prev]')?.addEventListener('click', () => moveGallery(-1));
+document.querySelector('[data-gallery-next]')?.addEventListener('click', () => moveGallery(1));
+galleryDots?.addEventListener('click', event => {
+  const target = event.target.closest('[data-gallery-dot]');
+  if (!target) return;
+  galleryIndex = Number(target.dataset.galleryDot);
+  renderGallery();
+});
+dialog?.addEventListener('close', () => {
+  body.classList.remove('gallery-open');
+  galleryImage?.removeAttribute('src');
+});
+dialog?.addEventListener('click', event => {
+  if (event.target === dialog) dialog.close();
+});
+galleryImage?.addEventListener('pointerdown', event => { pointerStart = event.clientX; });
+galleryImage?.addEventListener('pointerup', event => {
+  if (Math.abs(event.clientX - pointerStart) > 45) moveGallery(event.clientX > pointerStart ? -1 : 1);
+});
+document.addEventListener('keydown', event => {
+  if (!dialog?.open) return;
+  if (event.key === 'ArrowLeft') moveGallery(-1);
+  if (event.key === 'ArrowRight') moveGallery(1);
+});
